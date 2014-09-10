@@ -23,24 +23,60 @@
  */
 package org.spongepowered.api.entity;
 
+/**
+ * Describes an {@link Entity} that has a health value and can take damage
+ */
 public interface Damageable {
 
     /**
-     * Damages the entity by a specified amount;
+     * Damages the entity by a specified amount, with knockback.
      *
-     * @param damage the damage amount
+     * @param amount the amount of damage to deal to the {@code Damageable}
      */
     void damage(double amount);
+    
+    /**
+     * Damages the entity by a specified amount.
+     * 
+     * @param amount the amount of damage to deal to the {@code Damageable}
+     * @param knockback whether the attack should cause a knockback to occur
+     */
+    void damage(double amount, boolean knockback);
+    
+    //TODO: add damage methods that accept something akin to a DamageCause, depending on what we end up using for that
 
     /**
-     * Gets the health of the entity
+     * Gets the health of the entity.
      *
-     * @return health of the {@code Damageable}
+     * @return the health of the {@code Damageable}
      */
     double getHealth();
 
     /**
-     * Sets the Health of the {@code Damageable}
+     * Gets the maximum health currently set for the entity
+     *
+     * @return the maximum health of the {@code Damageable}
      */
-    void setHealth(double health);
+    double getMaxHealth();
+
+    /**
+     * Sets the health of the {@code Damageable}.
+     *
+     * @param health the health to set for the {@code Damageable}, from 0 to
+     *               the value of {@link #getMaxHealth()}, inclusive
+     *
+     * @throws IllegalArgumentException if the health to set is greater than
+     * the {@code Damageable}'s maximum health or negative
+     */
+    void setHealth(double health) throws IllegalArgumentException;
+
+    /**
+     * Sets the maximum health of the {@code Damageable}.
+     *
+     * @param health the maximum health to set for the {@code Damageable}
+     *
+     * @throws IllegalArgumentException if the parameter health is negative or
+     * greater than {@link Float#MAX_VALUE}
+     */
+    void setMaxHealth(double health) throws IllegalArgumentException;
 }
